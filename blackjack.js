@@ -5,6 +5,12 @@ var dealerSum=0;
 var playerSum=0;
 
 
+document.addEventListener("DOMContentLoaded",function(arg){
+    buildDeck();
+    shuffleDeck();
+    startGame();
+})
+
 function _createImage(card){
     let cardImage = document.createElement("img");
     cardImage.src="./images/cards/"+card+".png";
@@ -14,7 +20,8 @@ function _createImage(card){
         if(dealerCards.length>1){
             document.getElementById("dealer-cards").append(cardImage);
         }else{
-            cardImage.src="./images/cards/BACk.png";
+            cardImage.src="./images/cards/BACK.png";
+            cardImage.id="BACK"
             document.getElementById("dealer-cards").append(cardImage);
         }
     }
@@ -22,11 +29,41 @@ function _createImage(card){
     console.log(cardImage.src);
 }
 
-document.addEventListener("DOMContentLoaded",function(arg){
-    buildDeck();
-    shuffleDeck();
-    startGame();
-})
+function _sumValuePlayer(card){
+
+    let cardValue = card.split("-")[0];
+    if(cardValue=="A"){
+        if(playerSum+11>21){
+            cardValue=1;
+        }else{
+            cardValue=11;
+        }
+    }else if(cardValue=="K"||cardValue=="Q"||cardValue=="J"){
+        cardValue=10;
+    }else{
+        cardValue=parseInt(cardValue);
+    }
+    playerSum+=cardValue;
+
+}
+function _sumValueDealer(card){
+
+    let cardValue = card.split("-")[0];
+    if(cardValue=="A"){
+        if(dealerSum+11>21){
+            cardValue=1;
+        }else{
+            cardValue=11;
+        }
+    }else if(cardValue=="K"||cardValue=="Q"||cardValue=="J"){
+        cardValue=10;
+    }else{
+        cardValue=parseInt(cardValue);
+    }
+    dealerSum+=cardValue;
+
+}
+
 
 function buildDeck(){
     let values=["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
@@ -62,6 +99,7 @@ function dealCardsToDealer(){
     let dealerCard=deck.pop();
     dealerCards.push(dealerCard);
     _createImage(dealerCard);
+    _sumValueDealer(dealerCard);
 }
 
 function startGame(){
@@ -70,25 +108,21 @@ function startGame(){
     dealCardsToDealer();
     dealCardsToDealer();
 }
-function _sumValuePlayer(card){
-
-        let cardValue = card.split("-")[0];
-        if(cardValue=="A"){
-            if(playerSum+11>21){
-                cardValue=1;
-            }else{
-                cardValue=11;
-            }
-        }else if(cardValue=="K"||cardValue=="Q"||cardValue=="J"){
-            cardValue=10;
-        }else{
-            cardValue=parseInt(cardValue);
-        }
-        playerSum+=cardValue;
-    
-}
 
 function onHit(){
     dealCardsToPlayer();
     console.log(playerSum);
+}
+
+function onStand(){
+    let card = dealerCards[0];
+    document.getElementById("BACK").src="./images/cards/"+card+".png";
+    setTimeout(() => {
+        if(dealerSum<17){
+            dealCardsToDealer();
+        }
+    }, 1000);
+
+    console.log(dealerSum);
+    console.log(dealerCards)
 }
