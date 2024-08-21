@@ -76,6 +76,50 @@ function _sumValueDealer(card){
 
 }
 
+function _playerWin(){
+    document.getElementById("player-sum").style.color = "green";
+    document.getElementById("dealer-sum").style.color = "red";
+    showModal("You win!");
+    document.getElementById("hitButton").disabled=true;
+    document.getElementById("standButton").disabled=true;
+
+}
+
+function _playerLose(){
+    document.getElementById("dealer-sum").style.color = "green";
+    document.getElementById("player-sum").style.color = "red";
+    showModal("Dealer wins!");
+    document.getElementById("hitButton").disabled=true;
+    document.getElementById("standButton").disabled=true;
+}
+
+function _playerTie(){
+    document.getElementById("player-sum").style.color = "yellow";
+    document.getElementById("dealer-sum").style.color = "yellow";
+    showModal("Tie!");
+    document.getElementById("hitButton").disabled=true;
+    document.getElementById("standButton").disabled=true;
+
+}
+
+function _checkGame(){
+    if(_checkGame.caller.name=="onStand"){
+        if(dealerSum>21){
+            _playerWin();
+        }else if(playerSum > dealerSum){
+            _playerWin();
+        }else if(playerSum == dealerSum){
+            _playerTie();
+        }else{
+            _playerLose();
+        }
+    }else{
+        if(playerSum>21){
+            _playerLose();
+        }
+    }
+}
+
 
 function buildDeck(){
     let values=["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
@@ -129,6 +173,8 @@ function onHit(){
 }
 
 function onStand(){
+    document.getElementById("hitButton").disabled = true;
+    document.getElementById("standButton").disabled = true;
     let card = dealerCards[0];
     document.getElementById("BACK").src="./images/cards/"+card+".png";
     setTimeout(() => {
@@ -144,23 +190,6 @@ function onStand(){
 
 }
 
-function _checkGame(){
-    if(_checkGame.caller.name=="onStand"){
-        if(dealerSum>21){
-            _playerWin();
-        }else if(playerSum > dealerSum){
-            _playerWin();
-        }else if(playerSum == dealerSum){
-            _playerTie();
-        }else{
-            _playerLose();
-        }
-    }else{
-        if(playerSum>21){
-            _playerLose();
-        }
-    }
-}
 
 function showModal(message) {
     document.getElementById("modal-text").innerText = message;
@@ -193,30 +222,6 @@ function closeModal() {
 }
 
 
-function _playerWin(){
-    document.getElementById("player-sum").style.color = "green";
-    document.getElementById("dealer-sum").style.color = "red";
-    showModal("You win!");
-    document.getElementById("hitButton").disabled=true;
-    document.getElementById("standButton").disabled=true;
 
-}
-
-function _playerLose(){
-    document.getElementById("dealer-sum").style.color = "green";
-    document.getElementById("player-sum").style.color = "red";
-    showModal("Dealer wins!");
-    document.getElementById("hitButton").disabled=true;
-    document.getElementById("standButton").disabled=true;
-}
-
-function _playerTie(){
-    document.getElementById("player-sum").style.color = "yellow";
-    document.getElementById("dealer-sum").style.color = "yellow";
-    showModal("Tie!");
-    document.getElementById("hitButton").disabled=true;
-    document.getElementById("standButton").disabled=true;
-
-}
 
 
