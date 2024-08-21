@@ -28,3 +28,5 @@ Gameplay Instructions
 - The dealer must hit until their cards total 17 or more.
 - If your hand exceeds 21, you lose. If the dealer exceeds 21, you win.
 - If your hand is closer to 21 than the dealer's, you win. If it's lower, you lose. If they are equal, it's a tie.
+![](images/apphoto1.jpg)
+![](images/apphoto2.jpg)
