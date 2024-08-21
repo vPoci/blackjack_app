@@ -138,24 +138,85 @@ function onStand(){
         }
     }, 700);
     _updateSums();
-    _checkGame();
+    if(dealerSum>=17){
+        _checkGame();
+    }
+
 }
 
 function _checkGame(){
     if(_checkGame.caller.name=="onStand"){
         if(dealerSum>21){
-            console.log("playerwon")
+            _playerWin();
         }else if(playerSum > dealerSum){
-            console.log("playerwon")
+            _playerWin();
         }else if(playerSum == dealerSum){
-            console.log("tie")
+            _playerTie();
         }else{
-            console.log("dealerwon")
+            _playerLose();
         }
     }else{
         if(playerSum>21){
-            console.log("dealerwon")
+            _playerLose();
         }
     }
 }
+
+function showModal(message) {
+    document.getElementById("modal-text").innerText = message;
+    document.getElementById("result-modal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("result-modal").style.display = "none";
+
+    document.getElementById("dealer-cards").innerHTML = "";
+    document.getElementById("player-cards").innerHTML = "";
+
+    document.getElementById("dealer-sum").innerText = "";
+    document.getElementById("player-sum").innerText = "";
+
+    document.getElementById("dealer-sum").style.color = "white";
+    document.getElementById("player-sum").style.color = "white";
+
+    document.getElementById("hitButton").disabled = false;
+    document.getElementById("standButton").disabled = false;
+
+    dealerCards = [];
+    playerCards = [];
+    dealerSum = 0;
+    playerSum = 0;
+    
+    buildDeck();
+    shuffleDeck();
+    startGame();
+}
+
+
+function _playerWin(){
+    document.getElementById("player-sum").style.color = "green";
+    document.getElementById("dealer-sum").style.color = "red";
+    showModal("You win!");
+    document.getElementById("hitButton").disabled=true;
+    document.getElementById("standButton").disabled=true;
+
+}
+
+function _playerLose(){
+    document.getElementById("dealer-sum").style.color = "green";
+    document.getElementById("player-sum").style.color = "red";
+    showModal("Dealer wins!");
+    document.getElementById("hitButton").disabled=true;
+    document.getElementById("standButton").disabled=true;
+}
+
+function _playerTie(){
+    document.getElementById("player-sum").style.color = "yellow";
+    document.getElementById("dealer-sum").style.color = "yellow";
+    showModal("Tie!");
+    document.getElementById("hitButton").disabled=true;
+    document.getElementById("standButton").disabled=true;
+
+}
+
 

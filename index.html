@@ -20,8 +20,14 @@
         
     </div>
     <div>
-        <button onclick="onHit()">Hit</button>
-        <button onclick="onStand()">Stand</button>
+        <button id="hitButton" onclick="onHit()">Hit</button>
+        <button id="standButton" onclick="onStand()">Stand</button>
+    </div>
+    <div id="result-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <p id="modal-text"></p>
+        </div>
     </div>
 </body>
 </html>
