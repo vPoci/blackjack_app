@@ -11,6 +11,18 @@ document.addEventListener("DOMContentLoaded",function(arg){
     startGame();
 })
 
+function _updateSums() {
+    if(dealerCards.length<3){
+        document.getElementById("dealer-sum").innerText = "?";
+    }else{
+        document.getElementById("dealer-sum").innerText = dealerSum;
+    }
+    if(_updateSums.caller.name=="onStand"){
+        document.getElementById("dealer-sum").innerText = dealerSum;
+    }
+    document.getElementById("player-sum").innerText = playerSum;
+}
+
 function _createImage(card){
     let cardImage = document.createElement("img");
     cardImage.src="./images/cards/"+card+".png";
@@ -93,6 +105,7 @@ function dealCardsToPlayer(){
     playerCards.push(playerCard);
     _createImage(playerCard);
     _sumValuePlayer(playerCard);
+    _updateSums();
 }
 
 function dealCardsToDealer(){
@@ -100,6 +113,7 @@ function dealCardsToDealer(){
     dealerCards.push(dealerCard);
     _createImage(dealerCard);
     _sumValueDealer(dealerCard);
+    _updateSums();
 }
 
 function startGame(){
@@ -111,7 +125,7 @@ function startGame(){
 
 function onHit(){
     dealCardsToPlayer();
-    console.log(playerSum);
+    _checkGame();
 }
 
 function onStand(){
@@ -120,9 +134,28 @@ function onStand(){
     setTimeout(() => {
         if(dealerSum<17){
             dealCardsToDealer();
+            onStand();
         }
-    }, 1000);
-
-    console.log(dealerSum);
-    console.log(dealerCards)
+    }, 700);
+    _updateSums();
+    _checkGame();
 }
+
+function _checkGame(){
+    if(_checkGame.caller.name=="onStand"){
+        if(dealerSum>21){
+            console.log("playerwon")
+        }else if(playerSum > dealerSum){
+            console.log("playerwon")
+        }else if(playerSum == dealerSum){
+            console.log("tie")
+        }else{
+            console.log("dealerwon")
+        }
+    }else{
+        if(playerSum>21){
+            console.log("dealerwon")
+        }
+    }
+}
+

@@ -9,10 +9,11 @@ body{
     text-align: center;
     
 }
-h1{
+h1, p{
     color: white;
     font-size: 42px;
     font-weight: 800;
+    display: inline-block;;
 }
 .cards{
     width: 600px;
@@ -28,3 +29,4 @@ h1{
     width: 150px;
     height: 50px;
   }
+  
